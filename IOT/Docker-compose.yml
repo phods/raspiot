@@ -1,0 +1,137 @@
+  version: '3.7'
+
+  services:
+
+    adminer:
+      container_name: adminer
+      image: adminer:latest
+      environment:
+        - ADMINER_DEFAULT_SERVER: mariadb
+      restart: unless-stopped
+      ports:
+        - 9080:8080
+
+    grafana:
+      container_name: grafana
+      image: grafana/grafana:6.3.6
+      restart: unless-stopped
+      user: "0"
+      ports:
+        - 3000:3000
+      #env_file:  - ./services/grafana/grafana.env
+      environment:
+        #TZ=Europe/London
+        - GF_PATHS_DATA=/var/lib/grafana
+        - GF_PATHS_LOGS=/var/log/grafana
+        # [SERVER]
+        #GF_SERVER_ROOT_URL=http://localhost:3000/grafana
+        #GF_SERVER_SERVE_FROM_SUB_PATH=true
+        # [SECURITY]
+        #GF_SECURITY_ADMIN_USER=admin
+        #GF_SECURITY_ADMIN_PASSWORD=admin
+      volumes:
+        - ./volumes/grafana/data:/var/lib/grafana
+        - ./volumes/grafana/log:/var/log/grafana
+
+    influxdb:
+      container_name: influxdb
+      image: "influxdb:latest"
+      restart: unless-stopped
+      ports:
+        - 8086:8086
+        - 8083:8083
+        - 2003:2003
+      #env_file: - ./services/influxdb/influxdb.env
+      environment:
+        #- INFLUXDB_DB=mydb
+        - INFLUXDB_DATA_ENGINE=tsm1
+        - INFLUXDB_REPORTING_DISABLED=false
+        #- INFLUXDB_HTTP_AUTH_ENABLED=true
+        - INFLUXDB_ADMIN_ENABLED=true        
+        #- INFLUXDB_ADMIN_USER=myadminuser
+        #- INFLUXDB_ADMIN_PASSWORD=myadminpassword
+        - INFLUXDB_USER=nodered
+        #- INFLUXDB_WRITE_USER=mywriteuser
+        #- INFLUXDB_WRITE_USER_PASSWORD=mywritepassword
+      volumes:
+        - ./volumes/influxdb/data:/var/lib/influxdb
+        - ./backups/influxdb/db:/var/lib/influxdb/backup
+
+    mariadb:
+      image: linuxserver/mariadb
+      container_name: mariadb
+      #env_file:  - ./services/mariadb/mariadb.env
+      environment:
+        #- TZ=Europe/London
+        #- PUID=1000
+        #- PGID=1000
+        - MYSQL_ROOT_PASSWORD=ROOT_DB
+        - MYSQL_DATABASE=MYSQL_DB
+        - MYSQL_USER=MYSQL_USER
+        - MYSQL_PASSWORD=DB_PASS
+      volumes:
+        - ./volumes/mariadb/config:/config
+      ports:
+        - 3306:3306
+      restart: unless-stopped
+
+    mosquitto:
+      container_name: mosquitto
+      image: eclipse-mosquitto
+      restart: unless-stopped
+      user: "1883"
+      ports:
+        - 1883:1883
+        - 9001:9001
+      volumes:
+        - ./volumes/mosquitto/data:/mosquitto/data
+        - ./volumes/mosquitto/log:/mosquitto/log
+        - ./services/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    
+    nodered:
+      container_name: nodered
+      #build: ./services/nodered/.
+      image: nodered/node-red
+      restart: unless-stopped
+      user: "0"
+      privileged: true
+      #env_file: ./services/nodered/nodered.env
+      environment:
+        - TZ=Europe/Dublin
+      ports:
+        - 1880:1880
+      volumes:
+        - ./volumes/nodered/data:/data
+
+    portainer:
+      container_name: portainer
+      image: portainer/portainer
+      restart: unless-stopped
+      ports:
+        - 9000:9000
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - ./volumes/portainer/data:/data
+
+    postgres:
+      container_name: postgres
+      image: postgres
+      restart: unless-stopped
+      #env_file:   - ./services/postgres/postgres.env
+      environment:
+        - POSTGRES_USER=postuser
+        - POSTGRES_PASSWORD=postpassword
+        - POSTGRES_DB=postdb
+      ports:
+        - 5432:5432
+      volumes:
+        - ./volumes/postgres/data:/var/lib/postgresql/data
+
+    telegraf:
+      container_name: telegraf
+      image: telegraf
+      volumes:
+        - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      depends_on:
+        - influxdb
+        - mosquitto
