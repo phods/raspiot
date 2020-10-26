@@ -9,25 +9,20 @@ https://www.raspberrypi.org/downloads/raspberry-pi-desktop/
 
 3- boot the sd, configure wifi, enable vnc and ssh
 
-4- install docker
+4- install docker & docker-compose
 
-sudo apt-get update && sudo apt-get upgrade
+$ sudo apt update && sudo apt upgrade -y
+$ curl -sSL https://get.docker.com | sh
+$ sudo usermod -aG docker pi
+$ sudo apt install libffi-dev libssl-dev python3 python3-pip
+$ sudo apt remove python-configparser
+$ sudo pip3 install docker-compose
+$ reboot
 
-curl -sSL https://get.docker.com | sh
 
-5- Once Docker has finished installing to the Pi, there are a couple more things we need to do.
+The reboot is only required to be able to execute docker commands as normal Pi user without the sudo command.
 
-For another user to be able to interact with Docker, it needs to be added to the docker group.
 
-So our next step is to add our pi user to the docker group by using the command below.
+docker-compose -f {compose file name} up -d ( to run the compose in background
 
-sudo usermod -aG docker pi
-
-ince we made some changes to our pi user, we will now need to log out and log back in for it to take effect.
-
-You can log out by running the following command in the terminal.
-
-logout
-3. Once you have logged back in, you can verify that the docker group has been successfully added to your user by running the following command.
-
-groups
+docker exec -it influxdb influx
