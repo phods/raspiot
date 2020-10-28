@@ -102,6 +102,7 @@
       volumes:
         - ./volumes/nodered/data:/data
 
+        
     pihole:
       container_name: pihole
       image: pihole/pihole:latest
