@@ -35,5 +35,7 @@ docker exec -it influxdb influx
 
 pihole
 https://github.com/pi-hole/docker-pi-hole/#running-pi-hole-docker
+breask
+
 https://www.youtube.com/watch?v=dH3DdLy574M&ab_channel=NetworkChuck
 
