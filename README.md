@@ -24,7 +24,11 @@ The reboot is only required to be able to execute docker commands as normal Pi u
 
 5- confirm using the docker-compose ps
 
-docker-compose -f {compose file name} up -d ( to run the compose in background
+docker-compose -f {compose file name} up -d 
+
+docker-compose -f docker-compose.yml up -d 
+
+( to run the compose in background)
 
 docker exec -it influxdb influx
 
