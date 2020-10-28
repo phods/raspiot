@@ -22,7 +22,18 @@ $ reboot
 
 The reboot is only required to be able to execute docker commands as normal Pi user without the sudo command.
 
+5- confirm using the docker-compose ps
 
-docker-compose -f {compose file name} up -d ( to run the compose in background
+docker-compose -f {compose file name} up -d 
+
+docker-compose -f docker-compose.yml up -d 
+
+( to run the compose in background)
 
 docker exec -it influxdb influx
+
+
+pihole
+https://github.com/pi-hole/docker-pi-hole/#running-pi-hole-docker
+https://www.youtube.com/watch?v=dH3DdLy574M&ab_channel=NetworkChuck
+
