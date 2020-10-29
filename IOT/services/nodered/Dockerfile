@@ -1,5 +1,4 @@
 FROM nodered/node-red:latest
-
 RUN for addonnodes in \
 node-red-node-pi-gpiod \
 node-red-dashboard \
@@ -18,3 +17,4 @@ node-red-contrib-file-function \
 npm install ${addonnodes} ;\
 done;
 RUN npm install --unsafe-perm node-red-node-sqlite
+
