@@ -1,5 +1,13 @@
 # raspiot
 
+
+# header H1
+## header H2
+### header H3
+#### header H4
+##### header H5
+###### header H6
+
 How to configure a raspberry for IOT, with docker, Mosquitto, Node-Red, Grafana, influxDB, Postgres, Portainer, and Adminer.
 
 1- download the raspbian img from:
@@ -19,7 +27,7 @@ $ sudo apt remove python-configparser
 $ sudo pip3 install docker-compose
 $ reboot
 
-
+# header H1
 The reboot is only required to be able to execute docker commands as normal Pi user without the sudo command.
 
 5- confirm using the docker-compose ps
