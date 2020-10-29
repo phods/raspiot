@@ -74,9 +74,9 @@ To enable SSH on your Raspberry Pi perform the following steps:
 6-Power on your Pi board. On boot Pi will check whether this file exists and if it does, SSH will be enabled and the file is removed.
 7-Once Raspberry Pi boots up you can SSH into it.
 
-´´´
+```
 sudo systemctl enable sshsudo systemctl start ssh
-´´´
+```
 
 - Configuring wifi without screen
 1-Power off your Raspberry Pi and remove the SD card.
@@ -86,7 +86,7 @@ sudo systemctl enable sshsudo systemctl start ssh
 5-Add the lines below, replacing variables with your SSID and password, and change the country value if needed.
 Insert your Raspbian SD card into your computer.
 
-´´´
+```
 country=US
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
@@ -96,7 +96,7 @@ scan_ssid=1
 psk="YOURPASSWORD"
 key_mgmt=WPA-PSK
 }
-´´´
+```
 
 The wireless configuration on the Raspberry Pi is located in /etc/wpa_supplicant.
 You can edit the configuration file with nano:
@@ -109,33 +109,33 @@ Open the file:
 sudo nano /etc/dhcpcd.conf
 Find the “Example static IP configuration” paragraph.
 Uncomment every line you need (probably ip_address, routers and domaine_name_servers), and change the values to adapt to your network.
-´´´
+```
 interface wlan0
 static ip_address=192.168.1.10/24
 static routers=192.168.1.1
 static domain_name_servers=8.8.8.8
-´´´
+```
 Save and exit, then reboot the Raspberry Pi:
-´´´
+```
 sudo reboot
-´´´´
+```
 
 - How to Reset a Forgotten Raspberry Pi Password
 
 1-Power down the Pi and remove the SD card. Insert it into your PC.
 2-Edit cmdline.txt
 The boot partition should be visible and contain a file named “cmdline.txt”. Edit this file in a text editor and add the following to the end of the existing text :
-´´´
+```
 init=/bin/sh
-´´´
+```
 Before:
-´´´
+```
 dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=PARTUUID=04ceb741-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait
-´´´
+```
 After:
-´´´
+```
 dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=PARTUUID=04ceb741-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait init=/bin/sh
-´´´
+```
 
 Make sure it is all one line! Save the text file and eject the SD card from the PC.
 
@@ -143,38 +143,38 @@ Step 4 – Reset the Pi Password
 Insert the card into the Pi with a monitor and keyboard connected. Power up the Pi. There may be a delay but you should be presented with a cursor.
 
 At the prompt type the following command :
-´´´
+```
 mount -o remount, rw /
-´´´
+```
 If this results in an error message such as :
-´´´
+```
 /bin/sh: 0: can’t access tty; job control turned off [ 21.366191] random: crng init done
-´´´
+```
 Try the mount command again :
-´´´
+```
 mount -o remount, rw /
-´´´
+```
 
 Finally you can now attempt to change the password :
-´´´
+```
 passwd pi
-´´´
+```
 
 You will then be prompted for a new password. Enter it carefully and press the [Return] key. It will now ask you to retype the password.
 
 The password has been changed.
 
 Now type the following commands :
-´´´
+```
 sync
 exec /sbin/init
-´´´
+```
 The Pi will continue to boot and return you to the normal command line prompt.
 
 Shutdown the Pi and power it off.
-´´´
+```
 sudo halt
-´´´
+```
 
 Step 5 – Edit cmdline.txt
 Remove the SD card from the Pi and using the PC edit the “cmdline.txt” file again and remove the “init=/bin/sh” text you added in Step 2.
