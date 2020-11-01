@@ -66,25 +66,25 @@ https://www.youtube.com/watch?v=dH3DdLy574M&ab_channel=NetworkChuck
 - Enabling SSH on Raspberry Pi Without a Screen
 To enable SSH on your Raspberry Pi perform the following steps:
 
-1-Power off your Raspberry Pi and remove the SD card.
-2-Insert the SD card into your computer’s card reader. The SD card will mount automatically.
-3-Navigate to the SD card boot directory using your OS file manager. Linux and macOS users can also do this from the command line.
-4-Create a new empty file named ssh, without any extension, inside the boot directory.
-5-Remove the SD card from your computer and put it in your Raspberry Pi.
-6-Power on your Pi board. On boot Pi will check whether this file exists and if it does, SSH will be enabled and the file is removed.
-7-Once Raspberry Pi boots up you can SSH into it.
+1- Power off your Raspberry Pi and remove the SD card.
+2- Insert the SD card into your computer’s card reader. The SD card will mount automatically.
+3- Navigate to the SD card boot directory using your OS file manager. Linux and macOS users can also do this from the command line.
+4- Create a new empty file named ssh, without any extension, inside the boot directory.
+5- Remove the SD card from your computer and put it in your Raspberry Pi.
+6- Power on your Pi board. On boot Pi will check whether this file exists and if it does, SSH will be enabled and the file is removed.
+7- Once Raspberry Pi boots up you can SSH into it.
 
 ```
 sudo systemctl enable sshsudo systemctl start ssh
 ```
 
 - Configuring wifi without screen
-1-Power off your Raspberry Pi and remove the SD card.
-2-Insert the SD card into your computer’s card reader. The SD card will mount automatically.
-3-Navigate to the SD card boot directory using your OS file manager. Linux and macOS users can also do this from the command line.
-4-Create a new empty file named wpa_supplicant.conf, inside the boot directory.
-5-Add the lines below, replacing variables with your SSID and password, and change the country value if needed.
-Insert your Raspbian SD card into your computer.
+1- Power off your Raspberry Pi and remove the SD card.
+2- Insert the SD card into your computer’s card reader. The SD card will mount automatically.
+3- Navigate to the SD card boot directory using your OS file manager. Linux and macOS users can also do this from the command line.
+4- Create a new empty file named wpa_supplicant.conf, inside the boot directory.
+5- Add the lines below, replacing variables with your SSID and password, and change the country value if needed.
+6- Insert your Raspbian SD card into your computer.
 
 ```
 country=US
@@ -106,7 +106,9 @@ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 If you need a static IP on your network, the interface configuration can be done in dhcpcd.conf:
 
 Open the file:
+```
 sudo nano /etc/dhcpcd.conf
+```
 Find the “Example static IP configuration” paragraph.
 Uncomment every line you need (probably ip_address, routers and domaine_name_servers), and change the values to adapt to your network.
 ```
@@ -122,8 +124,8 @@ sudo reboot
 
 - How to Reset a Forgotten Raspberry Pi Password
 
-1-Power down the Pi and remove the SD card. Insert it into your PC.
-2-Edit cmdline.txt
+1- Power down the Pi and remove the SD card. Insert it into your PC.
+2- Edit cmdline.txt
 The boot partition should be visible and contain a file named “cmdline.txt”. Edit this file in a text editor and add the following to the end of the existing text :
 ```
 init=/bin/sh
@@ -137,9 +139,9 @@ After:
 dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=PARTUUID=04ceb741-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait init=/bin/sh
 ```
 
-Make sure it is all one line! Save the text file and eject the SD card from the PC.
+3- Make sure it is all one line! Save the text file and eject the SD card from the PC.
 
-Step 4 – Reset the Pi Password
+4– Reset the Pi Password
 Insert the card into the Pi with a monitor and keyboard connected. Power up the Pi. There may be a delay but you should be presented with a cursor.
 
 At the prompt type the following command :
@@ -176,7 +178,7 @@ Shutdown the Pi and power it off.
 sudo halt
 ```
 
-Step 5 – Edit cmdline.txt
+5– Edit cmdline.txt
 Remove the SD card from the Pi and using the PC edit the “cmdline.txt” file again and remove the “init=/bin/sh” text you added in Step 2.
 
 Safely eject the SD card from the PC and re-insert into the Pi.

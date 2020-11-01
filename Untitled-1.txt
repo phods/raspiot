@@ -1,3 +1,19 @@
+# list of dependencies
+pip list
+
+pip freeze
+
+pip list
+
+List installed packages, including editables.
+
+pip freeze
+
+Output installed packages in requirements format.
+
+
+
+
 Created with sudo nano /usr/local/bin/checkwifi.sh
 
 Code: Select all
