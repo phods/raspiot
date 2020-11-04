@@ -10,15 +10,14 @@
       ports:
         - 9080:8080
 
-
-#    flask:
-#      build: ./flask
-#      container_name: flask
-#      restart: always
-#      environment:
-#        - APP_NAME=MyFlaskApp
-#      expose:
-#        - 8080
+    flask:
+      build: ./services/flask
+      container_name: flask
+      restart: always
+      environment:
+        - APP_NAME=MyFlaskApp
+      expose:
+        - 8080
 
     grafana:
       container_name: grafana
@@ -97,12 +96,12 @@
         - ./volumes/mosquitto/log:/mosquitto/log
         - ./services/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
 
-#    nginx:
-##      build: ./nginx
- #     container_name: nginx
- #     restart: always
- #     ports:
- #       - "80:80"
+    nginx:
+      build: ./services/nginx
+      container_name: nginx
+      restart: always
+      ports:
+        - "80:80"
     
     nodered:
       container_name: nodered
@@ -127,7 +126,7 @@
         - "53:53/tcp"
         - "53:53/udp"
         - "67:67/udp"
-        - "80:80/tcp"
+        #- "80:80/tcp"
         - "443:443/tcp"
       environment:
         - TZ=Europe/Dublin
