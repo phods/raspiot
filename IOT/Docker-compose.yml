@@ -119,27 +119,27 @@
         - ./volumes/nodered/data:/data
 
         
-    pihole:
-      container_name: pihole
-      image: pihole/pihole:latest
-      ports:
-        - "53:53/tcp"
-        - "53:53/udp"
-        - "67:67/udp"
-        #- "80:80/tcp"
-        - "443:443/tcp"
-      environment:
-        - TZ=Europe/Dublin
+#    pihole:
+#      container_name: pihole
+#      image: pihole/pihole:latest
+#      ports:
+#        - "53:53/tcp"
+#        - "53:53/udp"
+#        - "67:67/udp"
+#        #- "80:80/tcp"
+#        - "443:443/tcp"
+#      environment:
+#        - TZ=Europe/Dublin
         # WEBPASSWORD: 'set a secure password here or it will be random'
       # Volumes store your data between container upgrades
-      volumes:
-        - './volumes/pihole/etc-pihole/:/etc/pihole/'
-        - './volumes/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+#      volumes:
+#        - './volumes/pihole/etc-pihole/:/etc/pihole/'
+#        - './volumes/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
       # Recommended but not required (DHCP needs NET_ADMIN)
       # https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-      cap_add:
-        - NET_ADMIN
-      restart: unless-stopped
+#      cap_add:
+#        - NET_ADMIN
+#      restart: unless-stopped
 
     portainer:
       container_name: portainer
@@ -181,11 +181,11 @@
         - ./volumes/sqlite/data:/data
 
 
-    telegraf:
-      container_name: telegraf
-      image: telegraf
-      volumes:
-        - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      depends_on:
-        - influxdb
-        - mosquitto
+#    telegraf:
+#      container_name: telegraf
+#      image: telegraf
+#      volumes:
+#        - ./services/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+#      depends_on:
+#        - influxdb
+#        - mosquitto
