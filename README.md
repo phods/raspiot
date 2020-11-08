@@ -6,21 +6,32 @@
 * [Extras](#extras)
 
 ## General info
-How to configure a raspberry for IOT, with docker, Mosquitto, Node-Red, Grafana, influxDB, Postgres, Portainer, Adminer, Pi-Hole.
+How to configure a raspberry for IOT, with Docker, Mosquitto, Node-Red, Grafana, InfluxDB, Postgres, Portainer, Adminer, Pi-Hole, Nginx, Flask.
 	
 ## Technologies
 Project is created with:
-* docker
-* Mosquitto: 2.33
-* Node-Red: 999
+* Adminer
+* Alpine
+* Flask
+* Grafana
+* Influx
+* MariaDB
+* Mosquitto
+* Nginx
+* Node-red
+* Pihole
+* Portainer
+* Postgres
+* Sqlite
+* Telegraf
 	
 ## Setup
-1- download the raspbian img from:
+1- Download the raspbian *.img from:
 https://www.raspberrypi.org/downloads/raspberry-pi-desktop/
 
-2- using o rufus "burn" the iso in the sd
-3- boot the sd, configure wifi, enable vnc and ssh
-4- install docker & docker-compose
+2- Using o Win32DiskImager to "burn" the *.img in the sd
+3- Boot the sd, configure wifi, enable vnc and ssh
+4- Install docker & docker-compose
 ```
 $ sudo apt update && sudo apt upgrade -y
 $ curl -sSL https://get.docker.com | sh
@@ -29,17 +40,16 @@ $ sudo apt install libffi-dev libssl-dev python3 python3-pip
 $ sudo apt remove python-configparser
 $ sudo pip3 install docker-compose
 $ reboot
-
 ```
 The reboot is only required to be able to execute docker commands as normal Pi user without the sudo command.
 
-5- confirm using 
+5- Confirm docker is running 
 ```
 docker-compose ps
 ```
-6- copy your docker-compose.yml file to an especif path
+6- Copy your docker-compose.yml file to an especif path
 
-7- run you compose
+7- Run your compose
 ```
 docker-compose -f {compose file name} up -d 
 
@@ -47,7 +57,6 @@ docker-compose -f docker-compose.yml up -d
 
 ( -d  to run the compose in background)
 ```
-
 
 docker exec -it influxdb influx
 
@@ -59,33 +68,30 @@ https://github.com/pi-hole/docker-pi-hole/#running-pi-hole-docker
 https://www.youtube.com/watch?v=dH3DdLy574M&ab_channel=NetworkChuck
 
 
-https://www.youtube.com/watch?v=dH3DdLy574M&ab_channel=NetworkChuck
-
-
 ## EXtras:
 - Enabling SSH on Raspberry Pi Without a Screen
 To enable SSH on your Raspberry Pi perform the following steps:
 
-1- Power off your Raspberry Pi and remove the SD card.
-2- Insert the SD card into your computer’s card reader. The SD card will mount automatically.
-3- Navigate to the SD card boot directory using your OS file manager. Linux and macOS users can also do this from the command line.
-4- Create a new empty file named ssh, without any extension, inside the boot directory.
-5- Remove the SD card from your computer and put it in your Raspberry Pi.
-6- Power on your Pi board. On boot Pi will check whether this file exists and if it does, SSH will be enabled and the file is removed.
-7- Once Raspberry Pi boots up you can SSH into it.
+1 - Power off your Raspberry Pi and remove the SD card.
+2 - Insert the SD card into your computer’s card reader. The SD card will mount automatically.
+3 - Navigate to the SD card boot directory using your OS file manager. Linux and macOS users can also do this from the command line.
+4 - Create a new empty file named ssh, without any extension, inside the boot directory.
+5 - Remove the SD card from your computer and put it in your Raspberry Pi.
+6 - Power on your Pi board. On boot Pi will check whether this file exists and if it does, SSH will be enabled and the file is removed.
+7 - Once Raspberry Pi boots up you can SSH into it.
 
 ```
 sudo systemctl enable sshsudo systemctl start ssh
 ```
 
 - Configuring wifi without screen
-1- Power off your Raspberry Pi and remove the SD card.
-2- Insert the SD card into your computer’s card reader. The SD card will mount automatically.
-3- Navigate to the SD card boot directory using your OS file manager. Linux and macOS users can also do this from the command line.
-4- Create a new empty file named wpa_supplicant.conf, inside the boot directory.
-5- Add the lines below, replacing variables with your SSID and password, and change the country value if needed.
-6- Insert your Raspbian SD card into your computer.
 
+1 - Power off your Raspberry Pi and remove the SD card.
+2 - Insert the SD card into your computer’s card reader. The SD card will mount automatically.
+3 - Navigate to the SD card boot directory using your OS file manager. Linux and macOS users can also do this from the command line.
+4 - Create a new empty file named wpa_supplicant.conf, inside the boot directory.
+5 - Add the lines below, replacing variables with your SSID and password, and change the country value if needed.
+6 - Insert your Raspbian SD card into your computer.
 ```
 country=US
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
@@ -103,6 +109,7 @@ You can edit the configuration file with nano:
 sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 
 - Network configuration
+
 If you need a static IP on your network, the interface configuration can be done in dhcpcd.conf:
 
 Open the file:
@@ -124,8 +131,8 @@ sudo reboot
 
 - How to Reset a Forgotten Raspberry Pi Password
 
-1- Power down the Pi and remove the SD card. Insert it into your PC.
-2- Edit cmdline.txt
+1 - Power down the Pi and remove the SD card. Insert it into your PC.
+2 - Edit cmdline.txt
 The boot partition should be visible and contain a file named “cmdline.txt”. Edit this file in a text editor and add the following to the end of the existing text :
 ```
 init=/bin/sh
@@ -139,9 +146,9 @@ After:
 dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=PARTUUID=04ceb741-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait init=/bin/sh
 ```
 
-3- Make sure it is all one line! Save the text file and eject the SD card from the PC.
+3 - Make sure it is all one line! Save the text file and eject the SD card from the PC.
 
-4– Reset the Pi Password
+4 – Reset the Pi Password
 Insert the card into the Pi with a monitor and keyboard connected. Power up the Pi. There may be a delay but you should be presented with a cursor.
 
 At the prompt type the following command :
@@ -178,7 +185,7 @@ Shutdown the Pi and power it off.
 sudo halt
 ```
 
-5– Edit cmdline.txt
+5 – Edit cmdline.txt
 Remove the SD card from the Pi and using the PC edit the “cmdline.txt” file again and remove the “init=/bin/sh” text you added in Step 2.
 
 Safely eject the SD card from the PC and re-insert into the Pi.
