@@ -8,12 +8,17 @@
       #environment:     - ADMINER_DEFAULT_SERVER: mariadb
       restart: unless-stopped
       ports:
-        - 9080:8080
+        - 9080:9080
+
+    alpine:
+      container_name: alpine
+      image: alpine
+      restart: unless-stopped
 
     flask:
       build: ./services/flask
       container_name: flask
-      restart: always
+      restart: unless-stopped
       environment:
         - APP_NAME=MyFlaskApp
       expose:
@@ -99,7 +104,7 @@
     nginx:
       build: ./services/nginx
       container_name: nginx
-      restart: always
+      restart: unless-stopped
       ports:
         - "80:80"
     
@@ -141,10 +146,27 @@
 #        - NET_ADMIN
 #      restart: unless-stopped
 
+    prometheus:
+      container_name: prometheus
+      image: prom/prometheus:latest
+      restart: unless-stopped
+      user: "0"
+      ports:
+        - 9090:9090
+      #env_file:
+      #  - ./services/prometheus/prometheus.env
+      depends_on:
+      volumes:
+        - ./services/prometheus/config.yml:/etc/prometheus/config.yml
+        - ./volumes/prometheus/data:/data
+      command:
+        - '--config.file=/etc/prometheus/config.yml'
+        - '--storage.tsdb.path=/data'
+
     portainer:
       container_name: portainer
       image: portainer/portainer
-      restart: unless-stopped
+      restart: always
       ports:
         - 9000:9000
       volumes:
@@ -164,6 +186,14 @@
         - 5432:5432
       volumes:
         - ./volumes/postgres/data:/var/lib/postgresql/data
+
+    python:
+      container_name: python
+      build: ./services/python/.
+      restart: unless-stopped
+      network_mode: host
+      volumes:
+        - ./volumes/python/app:/usr/src/app
 
     #sqlite installed inside alpine image
     sqlite:

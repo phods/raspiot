@@ -81,7 +81,8 @@ To enable SSH on your Raspberry Pi perform the following steps:
 7. Once Raspberry Pi boots up you can SSH into it.
 
 ```
-sudo systemctl enable sshsudo systemctl start ssh
+sudo systemctl enable ssh
+sudo systemctl start ssh
 ```
 
 - Configuring wifi without screen
@@ -192,3 +193,74 @@ Safely eject the SD card from the PC and re-insert into the Pi.
 
 Power up the Pi and your new password should now be active.
 
+
+
+## Postgres
+
+to connect in the postgres bash inside the docker
+psql -U username -d databasename
+
+list databases
+\l
+
+list datatables
+\dt
+
+Describe a table
+\d table_name
+
+List available schema
+\dn
+
+List users and their roles
+\du
+
+postgresql version
+SELECT version(); 
+or
+\g
+
+quit
+\q
+
+help
+\?
+
+
+
+
+
+
+```
+-- Table: stocks.stock
+
+-- DROP TABLE stocks.stock;
+
+CREATE TABLE stocks.stock
+(
+    company text COLLATE pg_catalog."default" NOT NULL,
+    date date NOT NULL,
+    open numeric,
+    high numeric,
+    low numeric,
+    close numeric,
+    volume numeric,
+    adjclose numeric,
+    dividend numeric,
+    split numeric,
+    CONSTRAINT stock_pkey PRIMARY KEY (company, date)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE stocks.stock
+    OWNER to postgres;
+
+```
+
+- Show Raspberry Pi GPU temperature
+```
+vcgencmd measure_temp
+```

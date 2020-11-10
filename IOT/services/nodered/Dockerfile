@@ -22,6 +22,7 @@ node-red-contrib-ibm-watson-iot \
 node-red-contrib-influxdb \
 node-red-contrib-modbus \
 node-red-contrib-npm \
+node-red-contrib-re-postgres \
 node-red-contrib-telegrambot \
 ; do \
 npm install ${addonnodes} ;\
