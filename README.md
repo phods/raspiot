@@ -22,6 +22,8 @@ Project is created with:
 * Pihole
 * Portainer
 * Postgres
+* Prometheus
+* Python
 * Sqlite
 * Telegraf
 	
@@ -39,7 +41,7 @@ $ sudo usermod -aG docker pi
 $ sudo apt install libffi-dev libssl-dev python3 python3-pip
 $ sudo apt remove python-configparser
 $ sudo pip3 install docker-compose
-$ reboot
+$ sudo reboot
 ```
 The reboot is only required to be able to execute docker commands as normal Pi user without the sudo command.
 
@@ -188,9 +190,7 @@ sudo halt
 
 5. Edit cmdline.txt
 Remove the SD card from the Pi and using the PC edit the “cmdline.txt” file again and remove the “init=/bin/sh” text you added in Step 2.
-
 Safely eject the SD card from the PC and re-insert into the Pi.
-
 Power up the Pi and your new password should now be active.
 
 
@@ -229,7 +229,7 @@ help
 
 
 
-
+----------------------------------------------------------
 
 ```
 -- Table: stocks.stock
