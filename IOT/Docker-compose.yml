@@ -46,6 +46,16 @@
         - ./volumes/grafana/data:/var/lib/grafana
         - ./volumes/grafana/log:/var/log/grafana
 
+    homeassistant:
+      container_name: home-assistant
+      image: homeassistant/home-assistant:stable
+      volumes:
+        - ./volumes/homeassistant/config:/config
+      environment:
+        - TZ=America/New_York
+      restart: always
+      network_mode: host
+
     influxdb:
       container_name: influxdb
       image: "influxdb:latest"
@@ -146,22 +156,22 @@
 #        - NET_ADMIN
 #      restart: unless-stopped
 
-    prometheus:
-      container_name: prometheus
-      image: prom/prometheus:latest
-      restart: unless-stopped
-      user: "0"
-      ports:
-        - 9090:9090
-      #env_file:
-      #  - ./services/prometheus/prometheus.env
-      #depends_on:
-      volumes:
-        - ./services/prometheus/config.yml:/etc/prometheus/config.yml
-        - ./volumes/prometheus/data:/data
-      command:
-        - '--config.file=/etc/prometheus/config.yml'
-        - '--storage.tsdb.path=/data'
+#    prometheus:
+#      container_name: prometheus
+#      image: prom/prometheus:latest
+#      restart: unless-stopped
+#      user: "0"
+#      ports:
+#        - 9090:9090
+#      #env_file:
+#      #  - ./services/prometheus/prometheus.env
+#      #depends_on:
+#      volumes:
+#        - ./services/prometheus/config.yml:/etc/prometheus/config.yml
+#        - ./volumes/prometheus/data:/data
+#      command:
+#        - '--config.file=/etc/prometheus/config.yml'
+#        - '--storage.tsdb.path=/data'
 
     portainer:
       container_name: portainer
